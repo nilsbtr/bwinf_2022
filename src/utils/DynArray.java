@@ -1,4 +1,4 @@
-package junioren._01reimerei;
+package utils;
 
 public class DynArray<ContentType> {
     private ContentType inhalt;
