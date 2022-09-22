@@ -5,7 +5,6 @@ Abfahrt
 Abflug
 Absender
 Adresse
-Alkohol
 Alter
 Ampel
 Anfang
@@ -457,7 +456,7 @@ Praktikum
 Praxis
 Preis
 Problem
-Das Produkt
+Produkt
 Programm
 Prospekt
 Pullover
@@ -493,7 +492,7 @@ Sache
 Saft
 Salat
 Salz
-Samstag/Sonnabend
+Samstag
 Satz
 Schüler
 Schülerin
@@ -567,7 +566,7 @@ Tankstelle
 Tasche
 Tasse
 Taxi
-Der Tee
+Tee
 Teil
 Telefon
 Telefonbuch

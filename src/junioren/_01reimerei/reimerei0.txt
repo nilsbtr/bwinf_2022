@@ -7,5 +7,5 @@ Hygiene
 Knecht
 Recht
 Schiene
-Schlank
+schlank
 Schwank
