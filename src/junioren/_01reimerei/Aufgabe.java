@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import utils.DynArray;
-import utils.Stack;
-
 public class Aufgabe {
     String dateiName;
     DynArray<String> dynarr = new DynArray<>();

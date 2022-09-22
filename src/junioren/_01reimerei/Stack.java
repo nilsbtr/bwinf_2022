@@ -1,4 +1,4 @@
-package utils;
+package junioren._01reimerei;
 
 public class Stack<ContentType> {
 

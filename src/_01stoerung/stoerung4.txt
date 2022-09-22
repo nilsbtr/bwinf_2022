@@ -1,1 +1,3 @@
 ein _ _ tag
+
+ein \w+ \w+ tag

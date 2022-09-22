@@ -1,1 +1,3 @@
 fressen _ gern _
+
+fressen \w+ gern \w+
