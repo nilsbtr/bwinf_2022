@@ -7,10 +7,11 @@ import java.util.Random;
 
 public class Main {
     Pixel[][] pixels;
-    Queue<int[]> rpos = new Queue<>();
+    int[][] rpos;
 
     public Main(int roots) {
         pixels = new Pixel[720][1280];
+        rpos = new int[roots][2];
         placeRoots(roots);
         createGeneration();
     }
@@ -26,28 +27,30 @@ public class Main {
                 }
             }
             c++;
-            if (c == 5 || c == 20 || c == 50 || c == 100 || c == 200 || c == 350 || c % 500 == 0) {
+            if (c == 5 || c == 20 || c == 50 || c == 100 || c == 200 || c == 300 || c == 400 || c % 500 == 0) {
                 createPicture("picture" + c + ".pgm");
             }
         } while (emptyField());
 
         System.out.println("Checked the field " + c + " times.");
-
+        markRoots();
         createPicture("picturefinal.pgm");
     }
 
     private void placeRoots(int roots) {
         Random r = new Random();
-        for (int i = 0; i < roots; i++) {
+
+        int i = 0;
+
+        while (i < roots) {
             int x = r.nextInt(pixels[0].length - 1);
             int y = r.nextInt(pixels.length - 1);
 
             if (pixels[y][x] == null) {
-                int[] tmp = { x, y };
-                rpos.enqueue(tmp);
+                rpos[i][0] = x;
+                rpos[i][1] = y;
                 pixels[y][x] = new Pixel();
-            } else {
-                roots++;
+                i++;
             }
         }
     }
@@ -89,6 +92,12 @@ public class Main {
             }
         }
         return false;
+    }
+
+    private void markRoots() {
+        for (int i = 0; i < rpos.length; i++) {
+            pixels[rpos[i][1]][rpos[i][0]].setColor(0);
+        }
     }
 
     private void createPicture(String filename) {
