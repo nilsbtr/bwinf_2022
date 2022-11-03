@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Random;
 
-public class Main {
+public class Aufgabe {
     Pixel[][] pixels;
     int[][] rpos;
 
-    public Main(int roots) {
+    public Aufgabe(int roots) {
         pixels = new Pixel[720][1280];
         rpos = new int[roots][2];
         placeRoots(roots);
@@ -28,13 +28,13 @@ public class Main {
             }
             c++;
             if (c == 5 || c == 20 || c == 50 || c == 100 || c == 200 || c == 300 || c == 400 || c % 500 == 0) {
-                createPicture("picture" + c + ".pgm");
+                createPicture("pic/picture" + c + ".pgm");
             }
         } while (emptyField());
 
         System.out.println("Checked the field " + c + " times.");
         markRoots();
-        createPicture("picturefinal.pgm");
+        createPicture("pic/picturefinal.pgm");
     }
 
     private void placeRoots(int roots) {
@@ -124,6 +124,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main m = new Main(200);
+        Aufgabe a = new Aufgabe(200);
     }
 }

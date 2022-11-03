@@ -20,14 +20,14 @@ public class Pixel {
     public Pixel() {
         Random r = new Random();
         color = r.nextInt(205 - 50) + 50;
-        sU = r.nextInt(10 - 1) + 1;
-        sD = r.nextInt(10 - 1) + 1;
-        sR = r.nextInt(10 - 1) + 1;
-        sL = r.nextInt(10 - 1) + 1;
-        cU = r.nextInt(10 - 1) + 1;
-        cD = r.nextInt(10 - 1) + 1;
-        cR = r.nextInt(10 - 1) + 1;
-        cL = r.nextInt(10 - 1) + 1;
+        sU = r.nextInt(100 - 1) + 1;
+        sD = r.nextInt(100 - 1) + 1;
+        sR = r.nextInt(100 - 1) + 1;
+        sL = r.nextInt(100 - 1) + 1;
+        cU = sU;
+        cD = sD;
+        cR = sR;
+        cL = sL;
     }
 
     public Pixel(int color, int up, int down, int right, int left) {

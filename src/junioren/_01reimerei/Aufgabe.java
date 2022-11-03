@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 public class Aufgabe {
     String dateiName;
     DynArray<String> dynarr = new DynArray<>();
-    Stack<int[]> stack = new Stack<>();
 
     Aufgabe(String dateiName) {
         this.dateiName = dateiName;
@@ -64,49 +63,61 @@ public class Aufgabe {
         int[] posA = findeVokalgruppe(a);
         int[] posB = findeVokalgruppe(b);
 
+        if (posA == null || posB == null) {
+            return false;
+        }
+
         String vokA = a.substring(posA[0], posA[1]);
         String vokB = b.substring(posB[0], posB[1]);
 
         if (!vokA.equals(vokB)) {
-            return false;
+            return false; // Gleichheit der maßgeblichen Vokalgruppen
         }
 
-        String subA = a.substring(posA[1] + 1);
-        String subB = b.substring(posB[1] + 1);
+        String subA = a.substring(posA[1]);
+        String subB = b.substring(posB[1]);
 
-        if (subA.equals(subB)) {
-            return true;
+        if ((vokA + subA).length() * 2 < a.length() || (vokB + subB).length() * 2 < b.length()) {
+            return false; // Ende enthält mind. 1/2 der Buchstaben
         }
 
-        // TODO: Hälfte der Buchstaben stimmt überein
+        if (!subA.equals(subB)) {
+            return false; // Wörter enden gleich
+        }
+
+        return true;
     }
 
     private int[] findeVokalgruppe(String wort) {
-        int[] arr = stack.top();
-        stack.pop();
+        Stack<int[]> stack = new Stack<>();
+
+        Pattern pattern = Pattern.compile("[aeiouAEIOUäöüÄÖÜ]+");
+        Matcher matcher = pattern.matcher(wort);
+
+        while (matcher.find()) {
+            int[] arr = new int[2];
+            arr[0] = matcher.start();
+            arr[1] = matcher.end();
+            stack.push(arr);
+        }
+
+        int[] arr;
 
         if (!stack.isEmpty()) {
             arr = stack.top();
-        }
-
-        while (!stack.isEmpty()) {
             stack.pop();
+
+            if (!stack.isEmpty()) {
+                arr = stack.top();
+            }
+        } else {
+            arr = null;
         }
 
         return arr;
-
     }
 
-    public void regexMatcher(String wort) {
-        Pattern pattern = Pattern.compile("[aeiouAEIOU]+");
-        Matcher matcher = pattern.matcher(wort);
-
-        if (matcher.find()) {
-            int[] arr = new int[2];
-            arr[0] = matcher.start(); // Start of match
-            arr[1] = (arr[0] + matcher.end() - 1); // End of match
-            stack.push(arr);
-            regexMatcher(wort.substring(0, arr[0] - 1));
-        }
+    public static void main(String[] args) {
+        Aufgabe a = new Aufgabe("src/junioren/_01reimerei/reimerei3.txt");
     }
 }
