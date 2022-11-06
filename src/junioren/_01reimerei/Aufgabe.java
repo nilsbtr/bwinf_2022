@@ -48,7 +48,7 @@ public class Aufgabe {
             for (int i = 1; i < dynarr.getLength(); i++) {
                 String b = dynarr.getItem(i);
 
-                if (b.endsWith(a) || a.endsWith(b)) {
+                if (b.toUpperCase().endsWith(a.toUpperCase()) || a.toUpperCase().endsWith(b.toUpperCase())) {
                     continue;
                 } else if (vergleicheWorte(a, b)) {
                     System.out.println(a + " + " + b);

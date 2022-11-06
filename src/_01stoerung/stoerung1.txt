@@ -1,3 +1,1 @@
 ich muß _ clara _
-
-ich muß \w+ clara \w+

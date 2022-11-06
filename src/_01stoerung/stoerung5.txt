@@ -1,3 +1,1 @@
 wollen _ so _ sein
-
-wollen \w+ so \w+ sein

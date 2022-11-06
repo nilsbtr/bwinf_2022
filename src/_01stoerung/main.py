@@ -10,7 +10,6 @@ def main(file):
     regex = string.replace('_', '\w+')
     print(string)
     search_string(regex, len(string.split()))
-    print('----------')
 
 
 def search_string(regex, len):
@@ -26,7 +25,7 @@ def search_string(regex, len):
             matches = re.findall(regex, check, re.IGNORECASE)
             if matches:
                 for match in matches:
-                    print(f'Found match in line {i}: {match}')
+                    print(f'Line {i}: {match}')
             matches.clear()
             pre = line
             i += 1
@@ -34,4 +33,6 @@ def search_string(regex, len):
 
 if __name__ == "__main__":
     for i in range(6):
+        print(f'// stoerung{i}.txt')
         main(f'stoerung{i}.txt')
+        print('-----------------')

@@ -1,3 +1,1 @@
 das _ mir _ _ _ vor
-
-das \w+ mir \w+ \w+ \w+ vor
