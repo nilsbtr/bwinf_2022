@@ -23,34 +23,23 @@ public class Aufgabe {
 
     public void dateiLesen() {
         try (BufferedReader in = new BufferedReader(new FileReader(dateiName))) {
-            int i = 0;
             String line;
             while ((line = in.readLine()) != null) {
                 dynarr.append(line);
-                i++;
             }
-            System.out.println(i);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void aufgabeLoesen() {
-        for (int i = 0; i < dynarr.getLength(); i++) {
-            System.out.println(dynarr.getItem(i));
-        }
-
-        System.out.println("--------------------");
-
         while (!dynarr.isEmpty()) {
             String a = dynarr.getItem(0);
 
             for (int i = 1; i < dynarr.getLength(); i++) {
                 String b = dynarr.getItem(i);
 
-                if (b.toUpperCase().endsWith(a.toUpperCase()) || a.toUpperCase().endsWith(b.toUpperCase())) {
-                    continue;
-                } else if (vergleicheWorte(a, b)) {
+                if (vergleicheWorte(a, b)) {
                     System.out.println(a + " + " + b);
                 }
             }
@@ -60,61 +49,52 @@ public class Aufgabe {
     }
 
     private boolean vergleicheWorte(String a, String b) {
-        int[] posA = findeVokalgruppe(a);
-        int[] posB = findeVokalgruppe(b);
-
-        if (posA == null || posB == null) {
+        if (b.toUpperCase().endsWith(a.toUpperCase()) || a.toUpperCase().endsWith(b.toUpperCase())) {
             return false;
         }
 
-        String vokA = a.substring(posA[0], posA[1]);
-        String vokB = b.substring(posB[0], posB[1]);
+        String sa = findeVokalgruppe(a);
+        String sb = findeVokalgruppe(b);
 
-        if (!vokA.equals(vokB)) {
-            return false; // Gleichheit der maßgeblichen Vokalgruppen
+        if (sa.equals("") || sb.equals("")) {
+            return false; // Keine Vokale gefunden
         }
 
-        String subA = a.substring(posA[1]);
-        String subB = b.substring(posB[1]);
-
-        if ((vokA + subA).length() * 2 < a.length() || (vokB + subB).length() * 2 < b.length()) {
-            return false; // Ende enthält mind. 1/2 der Buchstaben
-        }
-
-        if (!subA.equals(subB)) {
+        if (!sa.equalsIgnoreCase(sb)) {
             return false; // Wörter enden gleich
+        }
+
+        if (sa.length() * 2 < a.length() || sb.length() * 2 < b.length()) {
+            return false; // Ende enthält mind. 1/2 der Buchstaben
         }
 
         return true;
     }
 
-    private int[] findeVokalgruppe(String wort) {
-        Stack<int[]> stack = new Stack<>();
+    private String findeVokalgruppe(String wort) {
+        Stack<Integer> stack = new Stack<>();
 
         Pattern pattern = Pattern.compile("[aeiouAEIOUäöüÄÖÜ]+");
         Matcher matcher = pattern.matcher(wort);
 
         while (matcher.find()) {
-            int[] arr = new int[2];
-            arr[0] = matcher.start();
-            arr[1] = matcher.end();
-            stack.push(arr);
+            stack.push(matcher.start());
         }
 
-        int[] arr;
+        int start;
 
         if (!stack.isEmpty()) {
-            arr = stack.top();
+            start = stack.top();
             stack.pop();
 
             if (!stack.isEmpty()) {
-                arr = stack.top();
+                start = stack.top();
             }
         } else {
-            arr = null;
+            return "";
         }
 
-        return arr;
+        return wort.substring(start);
     }
 
     public static void main(String[] args) {
