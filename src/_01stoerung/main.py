@@ -21,7 +21,7 @@ def search_string(regex, len):
                 i += 1
                 continue
             line = line.strip()
-            check = pre + ' ' + ' '.join(line.split()[:len - 1])
+            check = pre + ' ' + ' '.join(line.split()[: len - 1])
             matches = re.findall(regex, check, re.IGNORECASE)
             if matches:
                 for match in matches:

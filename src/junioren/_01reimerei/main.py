@@ -24,7 +24,7 @@ def check_words(a, b):
     sa = get_subvocals(a)
     sb = get_subvocals(b)
 
-    if (sa is None or sb is None):
+    if sa is None or sb is None:
         return False  # Keine Vokale gefunden
 
     if sa.lower() != sb.lower():
@@ -44,9 +44,9 @@ def get_subvocals(word):
         pointer.append(match.start())
     if length > 0:
         if length > 1:
-            return word[pointer[-2]:]
+            return word[pointer[-2] :]
         else:
-            return word[pointer[0]:]
+            return word[pointer[0] :]
     else:
         return None
 

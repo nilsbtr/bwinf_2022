@@ -3,7 +3,6 @@ package junioren._01reimerei;
 public class Stack<ContentType> {
 
     /* --------- Anfang der privaten inneren Klasse -------------- */
-
     private class StackNode {
 
         private ContentType content = null;

@@ -35,24 +35,26 @@ def main(filename):
             if line.strip():
                 tasks.append(Task(int(line.split()[0]), int(line.split()[1])))
     print('-- Simulation 1')
-    sim1(copy.deepcopy(tasks))
+    simulation1(copy.deepcopy(tasks))
     print('-- Simulation 2')
-    sim2(copy.deepcopy(tasks))
+    simulation2(copy.deepcopy(tasks))
     print('-- Simulation 3')
-    sim3(copy.deepcopy(tasks))
+    simulation3(copy.deepcopy(tasks))
 
 
-def sim1(queue):
-    total = 0
+def simulation1(queue):
+    wait = 0
+    total = [0]
 
     for task in queue[:-1]:
-        total += task.get_time()
+        wait += task.get_time()
+        total.append(wait)
 
-    print('Average:', round(total / len(queue)))
-    print('Maximum:', total)
+    print('Average:', round(sum(total) / len(total)))
+    print('Maximum:', wait)
 
 
-def sim2(queue):
+def simulation2(queue):
     current = None
     wait = []
     done = []
@@ -61,37 +63,72 @@ def sim2(queue):
     while wait or queue:
         time += 1
         if wait and current == None:
-            new = find_task(wait)
+            new = find_lowtime(wait)
             current = wait.pop(new)
         while queue and queue[0].get_start() == time:
             if current != None:
                 wait.append(current)
                 wait.append(queue.pop(0))
-                new = find_task(wait)
+                new = find_lowtime(wait)
                 current = wait.pop(new)
             else:
                 wait.append(queue.pop(0))
-                new = find_task(wait)
+                new = find_lowtime(wait)
                 current = wait.pop(new)
         for task in wait:
             task.wait()
         if current != None and current.progress():
             done.append(current)
             current = None
-    print('Average:', round(np.average([task.get_waited() for task in done])))
-    print('Maximum:', max(task.get_waited() for task in done))
+    print_times(done)
 
 
-def find_task(list):
-    low = [0, list[0].time]
-    for index, task in enumerate(list):
-        if task.time < low[1]:
-            low[0], low[1] = index, task.time
+def simulation3(queue):
+    current = None
+    wait = []
+    done = []
+    time = 0
+
+    while wait or queue:
+        time += 1
+        if wait and current == None:
+            new = find_highwait(wait)
+            current = wait.pop(new)
+        if wait and time % 60 == 0:
+            new = find_highwait(wait)
+            current = wait.pop(new)
+        while queue and queue[0].get_start() == time:
+            wait.append(queue.pop(0))
+        for task in wait:
+            task.wait()
+        if current != None and current.progress():
+            done.append(current)
+            current = None
+    print_times(done)
+
+
+def find_lowtime(wait):
+    low = [0, wait[0].get_time()]
+    for index, task in enumerate(wait):
+        if task.get_time() < low[1]:
+            low[0], low[1] = index, task.get_time()
     return low[0]
 
 
-def sim3(queue):
-    pass
+def find_highwait(wait):
+    high = [0, wait[0].get_waited()]
+    for index, task in enumerate(wait):
+        if task.get_waited() > high[1]:
+            high[0], high[1] = index, task.get_waited()
+    return high[0]
+
+
+def print_times(done):
+    waited = list(filter(lambda a: a != 0, list(map(lambda t: t.get_waited(), done))))
+    waited.sort(reverse=True)
+    print(waited)
+    print('Average:', round(np.average([task.get_waited() for task in done])))
+    print('Maximum:', max(task.get_waited() for task in done))
 
 
 if __name__ == "__main__":
