@@ -91,10 +91,7 @@ def simulation3(queue):
 
     while wait or queue:
         time += 1
-        if wait and current == None:
-            new = find_highwait(wait)
-            current = wait.pop(new)
-        if wait and time % 60 == 0:
+        if wait:
             new = find_highwait(wait)
             current = wait.pop(new)
         while queue and queue[0].get_start() == time:

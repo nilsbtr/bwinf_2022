@@ -19,11 +19,11 @@ public class Pixel {
 
     public Pixel() {
         Random r = new Random();
-        color = r.nextInt(205 - 50) + 50;
-        sU = r.nextInt(100 - 1) + 1;
-        sD = r.nextInt(100 - 1) + 1;
-        sR = r.nextInt(100 - 1) + 1;
-        sL = r.nextInt(100 - 1) + 1;
+        color = r.nextInt(175 - 75) + 50;
+        sU = r.nextInt(80 - 10) + 10;
+        sD = r.nextInt(80 - 10) + 10;
+        sR = r.nextInt(80 - 10) + 10;
+        sL = r.nextInt(80 - 10) + 10;
         cU = sU;
         cD = sD;
         cR = sR;
@@ -50,7 +50,7 @@ public class Pixel {
         this.color = color;
     }
 
-    // Getters Speed
+    // Speed
 
     public int getUp() {
         return sU;
@@ -68,22 +68,42 @@ public class Pixel {
         return sL;
     }
 
-    // Getters Cooldowns
+    // Cooldowns
 
-    public int cooldownUp() {
-        return cU;
+    public boolean cooldownUp() {
+        if (cU == 0) {
+            cU = sU;
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public int cooldownDown() {
-        return cD;
+    public boolean cooldownDown() {
+        if (cD == 0) {
+            cD = sD;
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public int cooldownRight() {
-        return cR;
+    public boolean cooldownRight() {
+        if (cR == 0) {
+            cR = sR;
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public int cooldownLeft() {
-        return cL;
+    public boolean cooldownLeft() {
+        if (cL == 0) {
+            cL = sL;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void nextStep() {
@@ -91,23 +111,5 @@ public class Pixel {
         cD = cD - 1;
         cR = cR - 1;
         cL = cL - 1;
-    }
-
-    // Cooldown Resets
-
-    public void resetUp() {
-        cU = sU;
-    }
-
-    public void resetDown() {
-        cD = sD;
-    }
-
-    public void resetRight() {
-        cR = sR;
-    }
-
-    public void resetLeft() {
-        cL = sL;
     }
 }
