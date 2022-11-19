@@ -19,7 +19,7 @@ public class Pixel {
 
     public Pixel() {
         Random r = new Random();
-        color = r.nextInt(175 - 75) + 50;
+        color = r.nextInt(190 - 50) + 50;
         sU = r.nextInt(80 - 10) + 10;
         sD = r.nextInt(80 - 10) + 10;
         sR = r.nextInt(80 - 10) + 10;

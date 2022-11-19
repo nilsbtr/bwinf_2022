@@ -12,16 +12,13 @@ def main(file):
     search_string(regex, len(string.split()))
 
 
-def search_string(regex, len):
+def search_string(regex, length):
     with io.open(os.path.join(sys.path[0], 'Buch.txt'), 'r', encoding='utf8') as buch:
         pre = buch.readline().strip()
         i = 1
         for line in buch:
-            if not line.strip():
-                i += 1
-                continue
             line = line.strip()
-            check = pre + ' ' + ' '.join(line.split()[: len - 1])
+            check = pre + ' ' + ' '.join(line.split()[: length - 1])
             matches = re.findall(regex, check, re.IGNORECASE)
             if matches:
                 for match in matches:
