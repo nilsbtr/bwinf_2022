@@ -5,30 +5,34 @@ import java.util.Random;
 public class Pixel {
     private int color;
 
-    // Speeds
+    // Saved Cooldowns (Speed, higher = slower)
     private int sU;
     private int sD;
     private int sR;
     private int sL;
 
-    // Cooldowns
+    // Current Cooldowns
     private int cU;
     private int cD;
     private int cR;
     private int cL;
 
+    // Create a pixel (random speeds in given borders)
+
     public Pixel() {
         Random r = new Random();
-        color = r.nextInt(190 - 50) + 50;
-        sU = r.nextInt(80 - 10) + 10;
-        sD = r.nextInt(80 - 10) + 10;
-        sR = r.nextInt(80 - 10) + 10;
-        sL = r.nextInt(80 - 10) + 10;
+        color = r.nextInt(Values.COLOR_MAX - Values.COLOR_MIN) + Values.COLOR_MIN;
+        sU = r.nextInt(Values.COOLDOWN_UP_MAX - Values.COOLDOWN_UP_MIN) + Values.COOLDOWN_UP_MIN;
+        sD = r.nextInt(Values.COOLDOWN_DOWN_MAX - Values.COOLDOWN_DOWN_MIN) + Values.COOLDOWN_DOWN_MIN;
+        sR = r.nextInt(Values.COOLDOWN_RIGHT_MAX - Values.COOLDOWN_RIGHT_MIN) + Values.COOLDOWN_RIGHT_MIN;
+        sL = r.nextInt(Values.COOLDOWN_LEFT_MAX - Values.COOLDOWN_LEFT_MIN) + Values.COOLDOWN_LEFT_MIN;
         cU = sU;
         cD = sD;
         cR = sR;
         cL = sL;
     }
+
+    // Create a copy of another pixel
 
     public Pixel(int color, int up, int down, int right, int left) {
         this.color = color;
@@ -42,6 +46,8 @@ public class Pixel {
         cL = left;
     }
 
+    // Color Getter and Setter
+
     public int getColor() {
         return color;
     }
@@ -50,7 +56,7 @@ public class Pixel {
         this.color = color;
     }
 
-    // Speed
+    // Speed Getter
 
     public int getUp() {
         return sU;
@@ -68,7 +74,7 @@ public class Pixel {
         return sL;
     }
 
-    // Cooldowns
+    // Cooldowns check and count
 
     public boolean cooldownUp() {
         if (cU == 0) {

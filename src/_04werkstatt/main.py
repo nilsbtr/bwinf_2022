@@ -29,7 +29,7 @@ class Task:
 
 def main(filename):
     tasks = []
-    with open(os.path.join(sys.path[0], filename), 'r', encoding='utf8') as file:
+    with open(os.path.join(sys.path[0], filename), 'r') as file:
         for line in file:
             line = line.strip()
             if line.strip():
@@ -91,7 +91,7 @@ def simulation3(queue):
 
     while wait or queue:
         time += 1
-        if wait:
+        if wait and time % 60 == 0:
             new = find_highwait(wait)
             current = wait.pop(new)
         while queue and queue[0].get_start() == time:

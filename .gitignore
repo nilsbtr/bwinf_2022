@@ -1,9 +1,17 @@
-# Compiled Classes
+# Compiled Files
 *.class
+__pycache__/
+*.py[cod]
+*$py.class
+
 # Log File
 *.log
+pip-log.txt
+pip-delete-this-directory.txt
+
 # BlueJ Files
 *.ctxt
+
 # Package Files
 *.jar
 *.war
@@ -12,6 +20,16 @@
 *.zip
 *.tar.gz
 *.rar
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
 # Other Files
 .vsls.json
 /bin

@@ -5,41 +5,36 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
-import org.apache.commons.io.FileUtils;
-
-public class Aufgabe {
+public class Main {
     Pixel[][] pixels;
     Point[] marker;
-    int roots;
-    int width;
-    int height;
+    String path;
     Random random;
 
-    public Aufgabe(int roots, int height, int width) {
-        try {
-            FileUtils.cleanDirectory(new File("pic/"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        this.roots = roots;
-        this.height = height;
-        this.width = width;
+    public Main() {
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hhmmss");
+        path = "pic/" + dateFormat.format(now);
+        File dir = new File(path);
+        dir.mkdir();
         random = new Random();
     }
 
     public void createGeneration(boolean pictures) {
-        pixels = new Pixel[height][width];
-        placeRoots(roots);
+        pixels = new Pixel[Values.HEIGHT][Values.WIDTH];
+        placeRoots();
 
         int c = 0;
         boolean incomplete = false;
 
         do {
             incomplete = false;
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
+            for (int y = 0; y < Values.HEIGHT; y++) {
+                for (int x = 0; x < Values.WIDTH; x++) {
                     if (pixels[y][x] != null) {
                         checkPixel(pixels[y][x], x, y);
                     } else if (!incomplete) {
@@ -50,9 +45,9 @@ public class Aufgabe {
             // Jede Bilderstellung benötigt ca. 7sek bei einer Auflösung von 720p!!!
             if ((c < 1000 && c % 100 == 0) || c % 1000 == 0) {
                 if (pictures) {
-                    createPicture("pic/picture" + c + ".pgm");
+                    createPicture(path + "/picture" + c + ".pgm");
                 } else {
-                    System.out.println(c);
+                    System.out.println("Schritt: " + c);
                 }
 
             }
@@ -60,17 +55,17 @@ public class Aufgabe {
         } while (incomplete);
 
         markRoots();
-        createPicture("pic/picturefinal.pgm");
+        createPicture(path + "/picturefinal.pgm");
         System.out.println("DONE! Checked the field " + c + " times.");
     }
 
-    private void placeRoots(int roots) {
-        marker = new Point[roots];
+    private void placeRoots() {
+        marker = new Point[Values.ROOTS];
         int i = 0;
 
-        while (i < roots) {
-            int x = random.nextInt(width - 1);
-            int y = random.nextInt(height - 1);
+        while (i < Values.ROOTS) {
+            int x = random.nextInt(Values.WIDTH - 1);
+            int y = random.nextInt(Values.HEIGHT - 1);
 
             if (pixels[y][x] == null) {
                 marker[i] = new Point(x, y);
@@ -97,7 +92,7 @@ public class Aufgabe {
     }
 
     private void createPixel(Pixel p, int x, int y) {
-        if ((x >= 0 && x < width) && (y >= 0 && y < height)) {
+        if ((x >= 0 && x < Values.WIDTH) && (y >= 0 && y < Values.HEIGHT)) {
             if (pixels[y][x] == null) {
                 pixels[y][x] = new Pixel(p.getColor(), p.getUp(), p.getDown(), p.getRight(), p.getLeft());
             }
@@ -113,11 +108,11 @@ public class Aufgabe {
     private void createPicture(String filename) {
         try (PrintStream out = new PrintStream(new FileOutputStream(filename))) {
             out.println("P2");
-            out.println(width + " " + height);
+            out.println(Values.WIDTH + " " + Values.HEIGHT);
             out.println("255");
 
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
+            for (int y = 0; y < Values.HEIGHT; y++) {
+                for (int x = 0; x < Values.WIDTH; x++) {
                     if (pixels[y][x] == null) {
                         out.print("255");
                     } else {
@@ -134,7 +129,7 @@ public class Aufgabe {
     }
 
     public static void main(String[] args) {
-        Aufgabe a = new Aufgabe(300, 720, 1280);
+        Main a = new Main();
         a.createGeneration(false);
     }
 }
